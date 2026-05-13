@@ -3,94 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rádio Online</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Sua Rádio Online | Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Azul bem escuro */
+            color: white;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            height: 100vh;
+            overflow: hidden;
         }
-        .player-card {
-            background: #1e293b;
-            padding: 2rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+
+        /* Fundo com efeito de luz */
+        .background-glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            z-index: -1;
+        }
+
+        .container {
             text-align: center;
-            width: 350px;
-            border: 1px solid #334155;
+            width: 90%;
+            max-width: 600px;
+            padding: 40px;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 24px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
-        #capa {
-            width: 200px;
-            height: 200px;
-            border-radius: 1rem;
-            object-fit: cover;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
-        h1 { font-size: 1.5rem; margin: 0.5rem 0; color: #38bdf8; }
-        p { margin: 0.2rem 0; color: #94a3b8; }
-        .musica-atual { color: #f1f5f9; font-weight: bold; margin-top: 1rem; }
-        audio {
-            width: 100%;
-            margin-top: 1.5rem;
-            height: 40px;
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.2);
+            color: #4ade80;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 30px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .player-wrapper {
+            background: #000;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
-<div class="player-card">
-    <img id="capa" src="https://via.placeholder.com/200" alt="Capa do Álbum">
-    <h1 id="titulo-radio">Carregando...</h1>
-    <p id="genero"></p>
-    
-    <div class="musica-atual">
-        <span>Tocando agora:</span>
-        <div id="musica">...</div>
-    </div>
+    <div class="background-glow"></div>
 
-    <audio id="player" controls>
-        Seu navegador não suporta áudio.
-    </audio>
-    
-    <p style="font-size: 0.8rem; margin-top: 1rem;">Ouvintes: <span id="ouvintes">0</span></p>
-</div>
-
-<script type="text/javascript">
-function atualizarDados() {
-    $.getJSON('https://cors-anywhere.herokuapp.com/http://ipstm.net/api-json/TmpRM05qST0rRA==', function(data) {
-        // Atualiza os textos
-        $('#titulo-radio').text(data.titulo);
-        $('#musica').text(data.musica_atual);
-        $('#genero').text(data.genero);
-        $('#ouvintes').text(data.ouvintes_conectados);
+    <div class="container">
+        <div class="logo">Minha Rádio</div>
+        <div class="status-badge">● No Ar</div>
         
-        // Atualiza a capa da música
-        if(data.capa_musica) {
-            $('#capa').attr('src', data.capa_musica);
-        }
+        <div class="player-wrapper">
+            <iframe src="https://player.ipstm.net/player-barra/64762/000000" frameborder="0" width="100%" height="31"></iframe>
+        </div>
 
-        // Configura o link do áudio se ainda não estiver configurado
-        // Geralmente o streaming é http://IP:PORTA/;
-        var streamUrl = "http://" + data.ip + ":" + data.porta + "/;";
-        if($('#player').attr('src') !== streamUrl) {
-            $('#player').attr('src', streamUrl);
-        }
-    });
-}
-
-// Atualiza ao carregar e depois a cada 30 segundos
-$(document).ready(function() {
-    atualizarDados();
-    setInterval(atualizarDados, 30000);
-});
-</script>
+        <footer>
+            &copy; 2026 - Programação 24 Horas
+        </footer>
+    </div>
 
 </body>
 </html>
