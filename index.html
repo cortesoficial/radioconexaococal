@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Azul bem escuro */
+            background-color: #0f172a;
             color: white;
             display: flex;
             flex-direction: column;
@@ -20,7 +20,6 @@
             overflow: hidden;
         }
 
-        /* Fundo com efeito de luz */
         .background-glow {
             position: absolute;
             width: 400px;
@@ -51,17 +50,24 @@
             letter-spacing: -1px;
         }
 
-        .status-badge {
+        /* Botão Pedir Música */
+        .btn-pedido {
             display: inline-block;
-            background: rgba(34, 197, 94, 0.2);
-            color: #4ade80;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            text-transform: uppercase;
+            margin-bottom: 25px;
+            padding: 10px 25px;
+            background: #38bdf8;
+            color: #0f172a;
+            text-decoration: none;
             font-weight: bold;
-            margin-bottom: 30px;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .btn-pedido:hover {
+            background: #7dd3fc;
+            transform: translateY(-2px);
         }
 
         .player-wrapper {
@@ -69,6 +75,7 @@
             padding: 10px;
             border-radius: 12px;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+            margin-top: 10px;
         }
 
         footer {
@@ -77,6 +84,12 @@
             color: #64748b;
         }
     </style>
+
+    <script type="text/javascript">
+        function abrir_pedido(url, largura, altura) {
+            window.open(url, "", "width=" + largura + ",height=" + altura + ",toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=NO");
+        }
+    </script>
 </head>
 <body>
 
@@ -84,7 +97,10 @@
 
     <div class="container">
         <div class="logo">Minha Rádio</div>
-        <div class="status-badge">● No Ar</div>
+        
+        <a class="btn-pedido" href="javascript:abrir_pedido('http://player.ipstm.net/pedido/64762','505','180');">
+            🎵 Pedir Música
+        </a>
         
         <div class="player-wrapper">
             <iframe src="https://player.ipstm.net/player-barra/64762/000000" frameborder="0" width="100%" height="31"></iframe>
